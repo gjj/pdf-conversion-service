@@ -1,14 +1,13 @@
 {
-  "name": "generator-nod",
+  "name": "pdf-to-image-service",
   "version": "0.0.1",
-  "description": "My node module",
+  "description": "PDF to image service using GhostScript.",
   "license": "MIT",
-  "repository": "diegohaz/nod",
-  "main": "dist/index.js",
+  "repository": "gjj/pdf-to-image-service",
+  "main": "functions/app.js",
   "author": {
-    "name": "Diego Haz",
-    "email": "hazdiego@gmail.com",
-    "url": "https://github.com/diegohaz"
+    "name": "Goi Jia Jian",
+    "url": "https://github.com/gjj"
   },
   "files": [
     "dist",
@@ -19,21 +18,14 @@
     "coverage": "npm test -- --coverage",
     "postcoverage": "open-cli coverage/lcov-report/index.html",
     "lint": "eslint .",
-    "flow": "flow check",
     "docs": "documentation readme src --section=API",
     "postdocs": "git add README.md",
     "clean": "rimraf dist",
-    "flowbuild": "flow-copy-source src dist",
-    "prebuild": "npm run docs && npm run clean && npm run flowbuild",
-    "build": "babel src -d dist",
+    "build": "babel functions -d dist",
     "prerelease": "npm run lint && npm test && npm run build",
     "release": "standard-version",
-    "postpublish": "git push origin master --follow-tags"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "postpublish": "git push origin master --follow-tags",
+    "start": "npx functions-framework --target=convertPDFtoImage [--signature-type=event]"
   },
   "lint-staged": {
     "*.js": [
@@ -41,28 +33,24 @@
       "git add"
     ]
   },
-  "keywords": [
-    "generator-nod"
-  ],
-  "dependencies": {},
+  "dependencies": {
+    "@google-cloud/storage": "5.9.0",
+    "gs": "https://github.com/gjj/node-gs/archive/master.tar.gz"
+  },
   "devDependencies": {
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.5",
     "@babel/plugin-proposal-class-properties": "7.4.4",
     "@babel/preset-env": "7.4.5",
-    "@babel/preset-flow": "7.0.0",
+    "@google-cloud/functions-framework": "1.9.0",
     "babel-eslint": "10.0.2",
     "babel-jest": "24.8.0",
     "documentation": "11.0.1",
-    "eslint": "6.0.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "5.0.0",
-    "eslint-plugin-flowtype": "3.10.5",
-    "eslint-plugin-flowtype-errors": "4.1.0",
-    "eslint-plugin-import": "2.17.3",
-    "eslint-plugin-prettier": "3.1.0",
-    "flow-bin": "0.101.1",
-    "flow-copy-source": "2.0.6",
+    "eslint": "7.31.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-prettier": "3.4.0",
     "husky": "2.4.1",
     "jest": "24.8.0",
     "lint-staged": "8.2.1",
